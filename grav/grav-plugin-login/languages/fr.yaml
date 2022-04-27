@@ -122,7 +122,6 @@ PLUGIN_LOGIN:
   ROUTE_FORGOT: "Chemin de mot de passe oublié"
   ROUTE_RESET: "Réinitialisation du chemin de mot de passe"
   ROUTE_PROFILE: "Chemin du profil utilisateur"
-  
   ROUTE_ACTIVATE: "Chemin d’activation de l’utilisateur"
   LOGGED_OUT: "Vous avez été déconnecté avec succès..."
   PAGE_RESTRICTED: "L’accès est restreint, veuillez vous connecter..."
@@ -134,11 +133,11 @@ PLUGIN_LOGIN:
   2FA_REGEN_HINT: "Pour régénérer le secret, vous devrez mettre à jour votre application d’authentification"
   2FA_FAILED: "Code d’authentification en 2 étapes non valide, veuillez réessayer..."
   2FA_ENABLED: "2FA activé"
-  
-  2FA_ENABLED_HELP: "Enables 2-Factor Authentication for all users"
+  2FA_ENABLED_HELP: "Active l’authentification à 2 étapes pour tous les utilisateurs"
   2FA_CODE_INPUT: "000000"
-  2FA_SECRET: "2FA Secret"
-  2FA_SECRET_HELP: "Scan this QR code into your [Authenticator App](https://learn.getgrav.org/admin-panel/2fa#apps). Also it's a good idea to backup the secret in a safe location, in case you need to reinstall your app. Check the [Grav docs](https://learn.getgrav.org/admin-panel/2fa) for more information "
+  2FA_SECRET: "Cecret 2FA"
+  
+  2FA_SECRET_HELP: "Scannez ce code QR dans votre [Application d’authentification](https://learn.getgrav.org/admin-panel/2fa#apps). Il est également conseillé de sauvegarder le code secret en lieu sûr, au cas où vous auriez besoin de réinstaller votre application. Check the [Grav docs](https://learn.getgrav.org/admin-panel/2fa) for more information."
   2FA_REGENERATE: "Regenerate"
   BTN_CANCEL: "Cancel"
   MANUALLY_ENABLE: "Manually Enable"
