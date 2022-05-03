@@ -1996,8 +1996,7 @@ if we know the parameters it uses. This is a lot cheaper than asking the factory
     }
 ```
 
-This function returns the reserves of the two tokens that the pair exchange has. Note that it can receive the tokens in either
-order, and sorts them for internal use.
+This function returns the reserves of the two tokens that the pair exchange has. Note that it can receive the tokens in either order, and sorts them for internal use.
 
 ```solidity
     // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
@@ -2008,16 +2007,14 @@ order, and sorts them for internal use.
     }
 ```
 
-This function gives you the amount of token B you'll get in return for token A if there is no fee involved. This calculation
-takes into account that the transfer changes the exchange rate.
+This function gives you the amount of token B you'll get in return for token A if there is no fee involved. This calculation takes into account that the transfer changes the exchange rate.
 
 ```solidity
     // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut) {
 ```
 
-The `quote` function above works great if there is no fee to use the pair exchange. However, if there is a 0.3%
-exchange fee the amount you actually get is lower. This function calculates the amount after the exchange fee.
+The `quote` function above works great if there is no fee to use the pair exchange. However, if there is a 0.3% exchange fee the amount you actually get is lower. This function calculates the amount after the exchange fee.
 
 ```solidity
 
@@ -2030,8 +2027,7 @@ exchange fee the amount you actually get is lower. This function calculates the 
     }
 ```
 
-Solidity does not handle fractions natively, so we can't just multiply the amount out by 0.997. Instead, we multiply
-the numerator by 997 and the denominator by 1000, achieving the same effect.
+Solidity does not handle fractions natively, so we can't just multiply the amount out by 0.997. Instead, we multiply the numerator by 997 and the denominator by 1000, achieving the same effect.
 
 ```solidity
     // given an output amount of an asset and pair reserves, returns a required input amount of the other asset
@@ -2076,8 +2072,7 @@ These two functions handle identifying the values when it is necessary to go thr
 
 ### Transfer Helper {#transfer-helper}
 
-[This library](https://github.com/Uniswap/uniswap-lib/blob/master/contracts/libraries/TransferHelper.sol) adds success checks
-around ERC-20 and Ethereum transfers to treat a revert and a `false` value return the same way.
+[This library](https://github.com/Uniswap/uniswap-lib/blob/master/contracts/libraries/TransferHelper.sol) adds success checks around ERC-20 and Ethereum transfers to treat a revert and a `false` value return the same way.
 
 ```solidity
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -2099,8 +2094,7 @@ library TransferHelper {
 We can call a different contract in one of two ways:
 
 - Use an interface definition to create a function call
-- Use the [application binary interface (ABI)](https://docs.soliditylang.org/en/v0.8.3/abi-spec.html) "manually" to
-  create the call. This is what the author of the code decided to do it.
+- Use the [application binary interface (ABI)](https://docs.soliditylang.org/en/v0.8.3/abi-spec.html) "manually" to create the call. This is what the author of the code decided to do it.
 
 ```solidity
         require(
@@ -2110,9 +2104,7 @@ We can call a different contract in one of two ways:
     }
 ```
 
-For the sake of backwards compatibility with token that were created prior to the ERC-20 standard, an ERC-20 call
-can fail either by reverting (in which case `success` is `false`) or by being successful and returning a `false`
-value (in which case there is output data, and if you decode it as a boolean you get `false`).
+For the sake of backwards compatibility with token that were created prior to the ERC-20 standard, an ERC-20 call can fail either by reverting (in which case `success` is `false`) or by being successful and returning a `false` value (in which case there is output data, and if you decode it as a boolean you get `false`).
 
 ```solidity
 
@@ -2131,8 +2123,7 @@ value (in which case there is output data, and if you decode it as a boolean you
     }
 ```
 
-This function implements [ERC-20's transfer functionality](https://eips.ethereum.org/EIPS/eip-20#transfer),
-which allows an account to spend out the allowance provided by a different account.
+This function implements [ERC-20's transfer functionality](https://eips.ethereum.org/EIPS/eip-20#transfer), which allows an account to spend out the allowance provided by a different account.
 
 ```solidity
 
@@ -2151,8 +2142,7 @@ which allows an account to spend out the allowance provided by a different accou
     }
 ```
 
-This function implements [ERC-20's transferFrom functionality](https://eips.ethereum.org/EIPS/eip-20#transferfrom),
-which allows an account to spend out the allowance provided by a different account.
+This function implements [ERC-20's transferFrom functionality](https://eips.ethereum.org/EIPS/eip-20#transferfrom), which allows an account to spend out the allowance provided by a different account.
 
 ```solidity
 
@@ -2163,13 +2153,10 @@ which allows an account to spend out the allowance provided by a different accou
 }
 ```
 
-This function transfers ether to an account. Any call to a different contract can attempt to send ether. Because we
-don't need to actually call any function, we don't send any data with the call.
+This function transfers ether to an account. Any call to a different contract can attempt to send ether. Because we don't need to actually call any function, we don't send any data with the call.
 
 ## Conclusion {#conclusion}
 
-This is a long article of about 50 pages. If you made it here, congratulations! Hopefully by now you've understood the considerations
-in writing a real-life application (as opposed to short sample programs) and are better to be able to write contracts for your own
-use cases.
+This is a long article of about 50 pages. If you made it here, congratulations! Hopefully by now you've understood the considerations in writing a real-life application (as opposed to short sample programs) and are better to be able to write contracts for your own use cases.
 
 Now go and write something useful and amaze us.
