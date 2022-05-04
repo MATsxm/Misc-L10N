@@ -1709,14 +1709,9 @@ This is the internal function to swap tokens that have transfer or storage fees 
             amountOutput = UniswapV2Library.getAmountOut(amountInput, reserveInput, reserveOutput);
 ```
 
-Because of the transfer fees we cannot rely on the `getAmountsOut` function to tell us how much we get out of
-each transfer (the way we do before calling the original `_swap`). Instead we have to transfer first and then see how
-many tokens we got back.
+Because of the transfer fees we cannot rely on the `getAmountsOut` function to tell us how much we get out of each transfer (the way we do before calling the original `_swap`). Instead we have to transfer first and then see how many tokens we got back.
 
-Note: In theory we could just use this function instead of `_swap`, but in certain cases (for example, if the transfer
-ends up being reverted because there isn't enough at the end to meet the required minimum) that would end up costing more
-gas. Transfer fee tokens are pretty rare, so while we need to accommodate them there's no need to all swaps to assume they
-go through at least one of them.
+Note: In theory we could just use this function instead of `_swap`, but in certain cases (for example, if the transfer ends up being reverted because there isn't enough at the end to meet the required minimum) that would end up costing more gas. Transfer fee tokens are pretty rare, so while we need to accommodate them there's no need to all swaps to assume they go through at least one of them.
 
 ```solidity
             }
@@ -1853,8 +1848,7 @@ This contract was used to migrate exchanges from the old v1 to v2. Now that they
 
 ## The Libraries {#libraries}
 
-The [SafeMath library](https://docs.openzeppelin.com/contracts/2.x/api/math) is well documented, so there's no need
-to document it here.
+The [SafeMath library](https://docs.openzeppelin.com/contracts/2.x/api/math) is well documented, so there's no need to document it here.
 
 ### Math {#Math}
 
@@ -1885,9 +1879,7 @@ Start with x as an estimate that is higher than the square root (that is the rea
                 x = (y / x + x) / 2;
 ```
 
-Get a closer estimate, the average of the previous estimate and the number whose square root we're trying to find divided by
-the previous estimate. Repeat until the new estimate isn't lower than the existing one. For more details,
-[see here](https://wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method).
+Get a closer estimate, the average of the previous estimate and the number whose square root we're trying to find divided by the previous estimate. Repeat until the new estimate isn't lower than the existing one. For more details, [see here](https://wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method).
 
 ```solidity
             }
@@ -1895,8 +1887,7 @@ the previous estimate. Repeat until the new estimate isn't lower than the existi
             z = 1;
 ```
 
-We should never need the square root of zero. The square roots of one, two, and three are roughly one (we use
-integers, so we ignore the fraction).
+We should never need the square root of zero. The square roots of one, two, and three are roughly one (we use integers, so we ignore the fraction).
 
 ```solidity
         }
@@ -1906,8 +1897,7 @@ integers, so we ignore the fraction).
 
 ### Fixed Point Fractions (UQ112x112) {#FixedPoint}
 
-This library handles fractions, which are normally not part of Ethereum arithmetic. It does this by encoding the number _x_
-as _x\*2^112_. This lets us use the original addition and subtraction opcodes without a change.
+This library handles fractions, which are normally not part of Ethereum arithmetic. It does this by encoding the number _x_ as _x\*2^112_. This lets us use the original addition and subtraction opcodes without a change.
 
 ```solidity
 pragma solidity =0.5.16;
@@ -1940,9 +1930,7 @@ Because y is `uint112`, the most it can be is 2^112-1. That number can still be 
 }
 ```
 
-If we divide two `UQ112x112` values, the result is no longer multiplied by 2^112. So instead we
-take an integer for the denominator. We would have needed to use a similar trick to do multiplication, but we
-don't need to do multiplication of `UQ112x112` values.
+If we divide two `UQ112x112` values, the result is no longer multiplied by 2^112. So instead we take an integer for the denominator. We would have needed to use a similar trick to do multiplication, but we don't need to do multiplication of `UQ112x112` values.
 
 ### UniswapV2Library {#uniswapV2library}
 
@@ -1966,9 +1954,7 @@ library UniswapV2Library {
     }
 ```
 
-Sort the two tokens by address, so we'll be able to get the address of the pair exchange for them. This is
-necessary because otherwise we'd have two possibilities, one for the parameters A,B and another for the
-parameters B,A, leading to two exchanges instead of one.
+Sort the two tokens by address, so we'll be able to get the address of the pair exchange for them. This is necessary because otherwise we'd have two possibilities, one for the parameters A,B and another for the parameters B,A, leading to two exchanges instead of one.
 
 ```solidity
     // calculates the CREATE2 address for a pair without making any external calls
@@ -1983,9 +1969,7 @@ parameters B,A, leading to two exchanges instead of one.
     }
 ```
 
-This function calculates the address of the pair exchange for the two tokens. This contract is created using
-[the CREATE2 opcode](https://eips.ethereum.org/EIPS/eip-1014), so we can calculate the address using the same algorithm
-if we know the parameters it uses. This is a lot cheaper than asking the factory, and
+This function calculates the address of the pair exchange for the two tokens. This contract is created using [the CREATE2 opcode](https://eips.ethereum.org/EIPS/eip-1014), so we can calculate the address using the same algorithm if we know the parameters it uses. This is a lot cheaper than asking the factory.
 
 ```solidity
     // fetches and sorts the reserves for a pair
