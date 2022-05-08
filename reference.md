@@ -3,6 +3,8 @@
 1. [markdown cheat-sheet](https://www.markdownguide.org/cheat-sheet/)
 
 ## fr-FR
+### Projects
+1. [Pancake wallet](https://github.com/MATsxm/Misc-L10N/tree/main/pancakeswap/pancake-frontend/public/locales)
 
 ## fr-CA
 
