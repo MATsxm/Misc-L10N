@@ -1331,23 +1331,14 @@ This function performs internal processing that is required for the functions th
         for (uint i; i < path.length - 1; i++) {
 ```
 
-As I'm writing this there are [388,160 ERC-20 tokens](https://etherscan.io/tokens). If there was a
-pair exchange for each token pair, it would be over a 150 billion pair exchanges. The entire chain, at
-the moment, [only has 0.1% that number of accounts](https://etherscan.io/chart/address). Instead, the swap
-functions support the concept of a path. A trader can exchange A for B, B for C, and C for D, so there is
-no need for a direct A-D pair exchange.
+As I'm writing this there are [388,160 ERC-20 tokens](https://etherscan.io/tokens). If there was a pair exchange for each token pair, it would be over a 150 billion pair exchanges. The entire chain, at the moment, [only has 0.1% that number of accounts](https://etherscan.io/chart/address). Instead, the swap functions support the concept of a path. A trader can exchange A for B, B for C, and C for D, so there is no need for a direct A-D pair exchange.
 
-The prices on these markets tend to be synchronized, because when they are out of sync it creates an
-opportunity for arbitrage. Imagine, for example, three tokens, A, B, and C. There are three pair
-exchanges, one for each pair.
+The prices on these markets tend to be synchronized, because when they are out of sync it creates an opportunity for arbitrage. Imagine, for example, three tokens, A, B, and C. There are three pair exchanges, one for each pair.
 
 1. The initial situation
 2. A trader sells 24.695 A tokens and gets 25.305 B tokens.
-3. The trader sells 24.695 B tokens for 25.305 C tokens, keeping approximately
-   0.61 B tokens as profit.
-4. Then the trader sells 24.695 C tokens for 25.305 A tokens, keeping approximately 0.61
-   C tokens as profit. The trader also has 0.61 extra A tokens (the 25.305 the trader
-   ends up with, minus the original investment of 24.695).
+3. The trader sells 24.695 B tokens for 25.305 C tokens, keeping approximately 0.61 B tokens as profit.
+4. Then the trader sells 24.695 C tokens for 25.305 A tokens, keeping approximately 0.61 C tokens as profit. The trader also has 0.61 extra A tokens (the 25.305 the trader ends up with, minus the original investment of 24.695).
 
 | Step | A-B Exchange                | B-C Exchange                | A-C Exchange                |
 | ---- | --------------------------- | --------------------------- | --------------------------- |
@@ -1374,8 +1365,7 @@ Get the expected out amounts, sorted the way the pair exchange expects them to b
             address to = i < path.length - 2 ? UniswapV2Library.pairFor(factory, output, path[i + 2]) : _to;
 ```
 
-Is this the last exchange? If so, send the tokens received for the trade to the destination. If not, send it to the
-next pair exchange.
+Is this the last exchange? If so, send the tokens received for the trade to the destination. If not, send it to the next pair exchange.
 
 ```solidity
 
@@ -1386,8 +1376,7 @@ next pair exchange.
     }
 ```
 
-Actually call the pair exchange to swap the tokens. We don't need a callback to be told about the exchange, so
-we don't send any bytes in that field.
+Actually call the pair exchange to swap the tokens. We don't need a callback to be told about the exchange, so we don't send any bytes in that field.
 
 ```solidity
     function swapExactTokensForTokens(
@@ -1401,16 +1390,11 @@ This function is used directly by traders to swap one token for another.
         address[] calldata path,
 ```
 
-This parameter contains the addresses of the ERC-20 contracts. As explained above, this is an array because you might
-need to go through several pair exchanges to get from the asset you have to the asset you want.
+This parameter contains the addresses of the ERC-20 contracts. As explained above, this is an array because you might need to go through several pair exchanges to get from the asset you have to the asset you want.
 
-A function parameter in solidity can be stored either in `memory` or the `calldata`. If the function is an entry point
-to the contract, called directly from a user (using a transaction) or from a different contract, then the parameter's value
-can be taken directly from the call data. If the function is called internally, as `_swap` above, then the parameters
-have to be stored in `memory`. From the perspective of the called contract `calldata` is read only.
+A function parameter in solidity can be stored either in `memory` or the `calldata`. If the function is an entry point to the contract, called directly from a user (using a transaction) or from a different contract, then the parameter's value can be taken directly from the call data. If the function is called internally, as `_swap` above, then the parameters have to be stored in `memory`. From the perspective of the called contract `calldata` is read only.
 
-With scalar types such as `uint` or `address` the compiler handles the choice of storage for us, but with arrays, which
-are longer and more expensive, we specify the type of storage to be used.
+With scalar types such as `uint` or `address` the compiler handles the choice of storage for us, but with arrays, which are longer and more expensive, we specify the type of storage to be used.
 
 ```solidity
         address to,
@@ -1425,8 +1409,7 @@ Return values are always returned in memory.
         require(amounts[amounts.length - 1] >= amountOutMin, 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT');
 ```
 
-Calculate the amount to be purchased in each swap. If the result is less than the minimum the trader is willing to accept,
-revert out of the transaction.
+Calculate the amount to be purchased in each swap. If the result is less than the minimum the trader is willing to accept, revert out of the transaction.
 
 ```solidity
         TransferHelper.safeTransferFrom(
@@ -1436,8 +1419,7 @@ revert out of the transaction.
     }
 ```
 
-Finally, transfer the initial ERC-20 token to the account for the first pair exchange and call `_swap`. This is all happening
-in the same transaction, so the pair exchange knows that any unexpected tokens are part of this transfer.
+Finally, transfer the initial ERC-20 token to the account for the first pair exchange and call `_swap`. This is all happening in the same transaction, so the pair exchange knows that any unexpected tokens are part of this transfer.
 
 ```solidity
     function swapTokensForExactTokens(
@@ -1456,10 +1438,7 @@ in the same transaction, so the pair exchange knows that any unexpected tokens a
     }
 ```
 
-The previous function, `swapTokensForTokens`, allows a trader to specify an exact number of input tokens he is willing to
-give and the minimum number of output tokens he is willing to receive in return. This function does the reverse swap, it
-lets a trader specify the number of output tokens he wants, and the maximum number of input tokens he is willing to pay for
-them.
+The previous function, `swapTokensForTokens`, allows a trader to specify an exact number of input tokens he is willing to give and the minimum number of output tokens he is willing to receive in return. This function does the reverse swap, it lets a trader specify the number of output tokens he wants, and the maximum number of input tokens he is willing to pay for them.
 
 In both cases, the trader has to give this periphery contract first an allowance to allow it to transfer them.
 
@@ -1539,9 +1518,7 @@ In both cases, the trader has to give this periphery contract first an allowance
     }
 ```
 
-These four variants all involve trading between ETH and tokens. The only difference is that we either receive ETH
-from the trader and use it to mint WETH, or we receive WETH from the last exchange in the path and burn it, sending
-the trader back the resulting ETH.
+These four variants all involve trading between ETH and tokens. The only difference is that we either receive ETH from the trader and use it to mint WETH, or we receive WETH from the last exchange in the path and burn it, sending the trader back the resulting ETH.
 
 ```solidity
     // **** SWAP (supporting fee-on-transfer tokens) ****
@@ -1549,8 +1526,7 @@ the trader back the resulting ETH.
     function _swapSupportingFeeOnTransferTokens(address[] memory path, address _to) internal virtual {
 ```
 
-This is the internal function to swap tokens that have transfer or storage fees to solve
-([this issue](https://github.com/Uniswap/uniswap-interface/issues/835)).
+This is the internal function to swap tokens that have transfer or storage fees to solve ([this issue](https://github.com/Uniswap/uniswap-interface/issues/835)).
 
 ```solidity
         for (uint i; i < path.length - 1; i++) {
@@ -1566,14 +1542,9 @@ This is the internal function to swap tokens that have transfer or storage fees 
             amountOutput = UniswapV2Library.getAmountOut(amountInput, reserveInput, reserveOutput);
 ```
 
-Because of the transfer fees we cannot rely on the `getAmountsOut` function to tell us how much we get out of
-each transfer (the way we do before calling the original `_swap`). Instead we have to transfer first and then see how
-many tokens we got back.
+Because of the transfer fees we cannot rely on the `getAmountsOut` function to tell us how much we get out of each transfer (the way we do before calling the original `_swap`). Instead we have to transfer first and then see how many tokens we got back.
 
-Note: In theory we could just use this function instead of `_swap`, but in certain cases (for example, if the transfer
-ends up being reverted because there isn't enough at the end to meet the required minimum) that would end up costing more
-gas. Transfer fee tokens are pretty rare, so while we need to accommodate them there's no need to all swaps to assume they
-go through at least one of them.
+Note: In theory we could just use this function instead of `_swap`, but in certain cases (for example, if the transfer ends up being reverted because there isn't enough at the end to meet the required minimum) that would end up costing more gas. Transfer fee tokens are pretty rare, so while we need to accommodate them there's no need to all swaps to assume they go through at least one of them.
 
 ```solidity
             }
@@ -1710,8 +1681,7 @@ This contract was used to migrate exchanges from the old v1 to v2. Now that they
 
 ## The Libraries {#libraries}
 
-The [SafeMath library](https://docs.openzeppelin.com/contracts/2.x/api/math) is well documented, so there's no need
-to document it here.
+The [SafeMath library](https://docs.openzeppelin.com/contracts/2.x/api/math) is well documented, so there's no need to document it here.
 
 ### Math {#Math}
 
@@ -1742,9 +1712,7 @@ Start with x as an estimate that is higher than the square root (that is the rea
                 x = (y / x + x) / 2;
 ```
 
-Get a closer estimate, the average of the previous estimate and the number whose square root we're trying to find divided by
-the previous estimate. Repeat until the new estimate isn't lower than the existing one. For more details,
-[see here](https://wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method).
+Get a closer estimate, the average of the previous estimate and the number whose square root we're trying to find divided by the previous estimate. Repeat until the new estimate isn't lower than the existing one. For more details, [see here](https://wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method).
 
 ```solidity
             }
@@ -1752,8 +1720,7 @@ the previous estimate. Repeat until the new estimate isn't lower than the existi
             z = 1;
 ```
 
-We should never need the square root of zero. The square roots of one, two, and three are roughly one (we use
-integers, so we ignore the fraction).
+We should never need the square root of zero. The square roots of one, two, and three are roughly one (we use integers, so we ignore the fraction).
 
 ```solidity
         }
@@ -1763,8 +1730,7 @@ integers, so we ignore the fraction).
 
 ### Fixed Point Fractions (UQ112x112) {#FixedPoint}
 
-This library handles fractions, which are normally not part of Ethereum arithmetic. It does this by encoding the number _x_
-as _x\*2^112_. This lets us use the original addition and subtraction opcodes without a change.
+This library handles fractions, which are normally not part of Ethereum arithmetic. It does this by encoding the number _x_ as _x\*2^112_. This lets us use the original addition and subtraction opcodes without a change.
 
 ```solidity
 pragma solidity =0.5.16;
@@ -1797,9 +1763,7 @@ Because y is `uint112`, the most it can be is 2^112-1. That number can still be 
 }
 ```
 
-If we divide two `UQ112x112` values, the result is no longer multiplied by 2^112. So instead we
-take an integer for the denominator. We would have needed to use a similar trick to do multiplication, but we
-don't need to do multiplication of `UQ112x112` values.
+If we divide two `UQ112x112` values, the result is no longer multiplied by 2^112. So instead we take an integer for the denominator. We would have needed to use a similar trick to do multiplication, but we don't need to do multiplication of `UQ112x112` values.
 
 ### UniswapV2Library {#uniswapV2library}
 
@@ -1823,9 +1787,7 @@ library UniswapV2Library {
     }
 ```
 
-Sort the two tokens by address, so we'll be able to get the address of the pair exchange for them. This is
-necessary because otherwise we'd have two possibilities, one for the parameters A,B and another for the
-parameters B,A, leading to two exchanges instead of one.
+Sort the two tokens by address, so we'll be able to get the address of the pair exchange for them. This is necessary because otherwise we'd have two possibilities, one for the parameters A,B and another for the parameters B,A, leading to two exchanges instead of one.
 
 ```solidity
     // calculates the CREATE2 address for a pair without making any external calls
@@ -1840,9 +1802,7 @@ parameters B,A, leading to two exchanges instead of one.
     }
 ```
 
-This function calculates the address of the pair exchange for the two tokens. This contract is created using
-[the CREATE2 opcode](https://eips.ethereum.org/EIPS/eip-1014), so we can calculate the address using the same algorithm
-if we know the parameters it uses. This is a lot cheaper than asking the factory, and
+This function calculates the address of the pair exchange for the two tokens. This contract is created using [the CREATE2 opcode](https://eips.ethereum.org/EIPS/eip-1014), so we can calculate the address using the same algorithm if we know the parameters it uses. This is a lot cheaper than asking the factory, and
 
 ```solidity
     // fetches and sorts the reserves for a pair
@@ -1853,8 +1813,7 @@ if we know the parameters it uses. This is a lot cheaper than asking the factory
     }
 ```
 
-This function returns the reserves of the two tokens that the pair exchange has. Note that it can receive the tokens in either
-order, and sorts them for internal use.
+This function returns the reserves of the two tokens that the pair exchange has. Note that it can receive the tokens in either order, and sorts them for internal use.
 
 ```solidity
     // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
@@ -1865,16 +1824,14 @@ order, and sorts them for internal use.
     }
 ```
 
-This function gives you the amount of token B you'll get in return for token A if there is no fee involved. This calculation
-takes into account that the transfer changes the exchange rate.
+This function gives you the amount of token B you'll get in return for token A if there is no fee involved. This calculation takes into account that the transfer changes the exchange rate.
 
 ```solidity
     // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut) {
 ```
 
-The `quote` function above works great if there is no fee to use the pair exchange. However, if there is a 0.3%
-exchange fee the amount you actually get is lower. This function calculates the amount after the exchange fee.
+The `quote` function above works great if there is no fee to use the pair exchange. However, if there is a 0.3% exchange fee the amount you actually get is lower. This function calculates the amount after the exchange fee.
 
 ```solidity
 
@@ -1887,8 +1844,7 @@ exchange fee the amount you actually get is lower. This function calculates the 
     }
 ```
 
-Solidity does not handle fractions natively, so we can't just multiply the amount out by 0.997. Instead, we multiply
-the numerator by 997 and the denominator by 1000, achieving the same effect.
+Solidity does not handle fractions natively, so we can't just multiply the amount out by 0.997. Instead, we multiply the numerator by 997 and the denominator by 1000, achieving the same effect.
 
 ```solidity
     // given an output amount of an asset and pair reserves, returns a required input amount of the other asset
@@ -1933,8 +1889,7 @@ These two functions handle identifying the values when it is necessary to go thr
 
 ### Transfer Helper {#transfer-helper}
 
-[This library](https://github.com/Uniswap/uniswap-lib/blob/master/contracts/libraries/TransferHelper.sol) adds success checks
-around ERC-20 and Ethereum transfers to treat a revert and a `false` value return the same way.
+[This library](https://github.com/Uniswap/uniswap-lib/blob/master/contracts/libraries/TransferHelper.sol) adds success checks around ERC-20 and Ethereum transfers to treat a revert and a `false` value return the same way.
 
 ```solidity
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -1956,8 +1911,7 @@ library TransferHelper {
 We can call a different contract in one of two ways:
 
 - Use an interface definition to create a function call
-- Use the [application binary interface (ABI)](https://docs.soliditylang.org/en/v0.8.3/abi-spec.html) "manually" to
-  create the call. This is what the author of the code decided to do it.
+- Use the [application binary interface (ABI)](https://docs.soliditylang.org/en/v0.8.3/abi-spec.html) "manually" to create the call. This is what the author of the code decided to do it.
 
 ```solidity
         require(
@@ -1967,9 +1921,7 @@ We can call a different contract in one of two ways:
     }
 ```
 
-For the sake of backwards compatibility with token that were created prior to the ERC-20 standard, an ERC-20 call
-can fail either by reverting (in which case `success` is `false`) or by being successful and returning a `false`
-value (in which case there is output data, and if you decode it as a boolean you get `false`).
+For the sake of backwards compatibility with token that were created prior to the ERC-20 standard, an ERC-20 call can fail either by reverting (in which case `success` is `false`) or by being successful and returning a `false` value (in which case there is output data, and if you decode it as a boolean you get `false`).
 
 ```solidity
 
@@ -1988,8 +1940,7 @@ value (in which case there is output data, and if you decode it as a boolean you
     }
 ```
 
-This function implements [ERC-20's transfer functionality](https://eips.ethereum.org/EIPS/eip-20#transfer),
-which allows an account to spend out the allowance provided by a different account.
+This function implements [ERC-20's transfer functionality](https://eips.ethereum.org/EIPS/eip-20#transfer), which allows an account to spend out the allowance provided by a different account.
 
 ```solidity
 
@@ -2008,8 +1959,7 @@ which allows an account to spend out the allowance provided by a different accou
     }
 ```
 
-This function implements [ERC-20's transferFrom functionality](https://eips.ethereum.org/EIPS/eip-20#transferfrom),
-which allows an account to spend out the allowance provided by a different account.
+This function implements [ERC-20's transferFrom functionality](https://eips.ethereum.org/EIPS/eip-20#transferfrom), which allows an account to spend out the allowance provided by a different account.
 
 ```solidity
 
@@ -2020,13 +1970,13 @@ which allows an account to spend out the allowance provided by a different accou
 }
 ```
 
-This function transfers ether to an account. Any call to a different contract can attempt to send ether. Because we
-don't need to actually call any function, we don't send any data with the call.
+This function transfers ether to an account. Any call to a different contract can attempt to send ether. Because we don't need to actually call any function, we don't send any data with the call.
 
 ## Conclusion {#conclusion}
 
-This is a long article of about 50 pages. If you made it here, congratulations! Hopefully by now you've understood the considerations
-in writing a real-life application (as opposed to short sample programs) and are better to be able to write contracts for your own
-use cases.
+This is a long article of about 50 pages. If you made it here, congratulations! Hopefully by now you've understood the considerations in writing a real-life application (as opposed to short sample programs) and are better to be able to write contracts for your own use cases.
 
 Now go and write something useful and amaze us.
+
+
+not a lot of typo to fix but <br> are real nightmares for translators when using translation tools like crowdin, Transifex or other. I canceled unnecessary newlines so that it would be easier to translate.
