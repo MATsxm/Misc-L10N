@@ -11,3 +11,11 @@ Simple storage for some l10n pages
 ### Toolkits
 
 [emoji](https://gist.github.com/rxaviers/7360908)
+
+
+
+
+
+https://www.markdownguide.org/basic-syntax/#overview
+https://www.markdownguide.org/cheat-sheet/#downloads
+
