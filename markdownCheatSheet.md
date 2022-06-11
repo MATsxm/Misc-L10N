@@ -15,4 +15,8 @@
 `###### Titre 6`
 ###### Titre 6
 
+### **Bold**Text
+
+Creating `**bold text**`.
+Creating **bold text**.
 
