@@ -19,4 +19,8 @@
 
 Creating `**bold text**`.
 Creating **bold text**.
+Creating `__bold text__`.
+Creating __bold text__.
+Creating`**bold**text`.
+Creating**bold**text.
 
