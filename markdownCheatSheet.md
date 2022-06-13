@@ -24,3 +24,12 @@ Creating __bold text__.
 Creating`**bold**text`.
 Creating**bold**text.
 
+### *Italic*Text
+
+Creating `*Italic text*`.
+Creating *Italic text*.
+Creating `_Italic text_`.
+Creating _Italic text_.
+Creating`*Italic*text`.
+Creating*Italic*text.
+
