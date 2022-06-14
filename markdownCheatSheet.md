@@ -33,3 +33,8 @@ Creating _Italic text_.
 Creating`*Italic*text`.
 Creating*Italic*text.
 
+### Blockquotes
+
+`> How to create a Blockquote.`
+> How to create a Blockquote.
+
