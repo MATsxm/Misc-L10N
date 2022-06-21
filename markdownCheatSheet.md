@@ -33,6 +33,7 @@ Creating**bold**text.
 ### *Italic*Text
 
 Creating `*Italic text*`.
+
 Creating *Italic text*.
 
 Creating `_Italic text_`.
