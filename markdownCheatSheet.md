@@ -37,6 +37,7 @@ Creating `*Italic text*`.
 Creating *Italic text*.
 
 Creating `_Italic text_`.
+
 Creating _Italic text_.
 
 Creating`*Italic*text`.
