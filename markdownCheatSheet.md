@@ -56,7 +56,7 @@ How to create a ``code``.
 
 How to create a `code`.
 
-`[matkdown](https://matkdown.com)`
+`[Lien hypertext](https://matkdown.com)`
 
 `<https://www.matkdownguide.org>`
 
