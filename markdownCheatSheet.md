@@ -1,4 +1,4 @@
-Créer tab
+Cr tab
 
 
 # Markdown cheatSheet
