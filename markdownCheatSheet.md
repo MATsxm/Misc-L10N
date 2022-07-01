@@ -1,4 +1,4 @@
-Cr ta
+Cr 
 
 
 # Markdown cheatSheet
