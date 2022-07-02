@@ -1,5 +1,4 @@
-Cr 
-
+C
 
 # Markdown cheatSheet
 
