@@ -1,6 +1,6 @@
 # Misc.
 
-Simple storage for some l10n pages
+Simple storage for some L10N pages
 
 
 ### Cheat sheet
