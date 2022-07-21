@@ -17,6 +17,5 @@ Cheat sheet
 
 https://www.markdownguide.org/basic-syntax/#overview
 
-
 https://www.markdownguide.org/cheat-sheet/#downloads
 
