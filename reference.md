@@ -1,6 +1,7 @@
 ## Projects
 ### fr-FR
 1. [Pancake wallet](https://github.com/MATsxm/Misc-L10N/tree/main/pancakeswap/pancake-frontend/public/locales)
+2. 
 
 ### fr-CA
 
