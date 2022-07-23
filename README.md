@@ -6,7 +6,6 @@ Simple storage for some L10N pages
 ### Cheat sheet
 
 #### Markdown
-
 [Markdown](https://github.com/MATsxm/Misc-L10N/blob/main/markdownCheatSheet.md)
 
 ### Toolkits
