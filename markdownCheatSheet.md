@@ -27,7 +27,6 @@
 
 ### **Bold**Text
 
-
 Creating `**bold text**`.
 
 Creating **bold text**.
