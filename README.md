@@ -2,7 +2,6 @@
 
 Simple storage for some L10N pages
 
-
 ### Cheat sheet
 
 #### Markdown
